@@ -49,6 +49,8 @@ jobs:
           if git diff --staged --quiet; then
             echo "no changes"
           else
-            git commit -m "ci: rebuild clash rule-sets"
+            # 带 [skip ci]：这次提交动的是 source/ 与产物，不加标记会再触发
+            # 一轮 build（那一轮必然无改动，纯属浪费）
+            git commit -m "ci: rebuild clash rule-sets [skip ci]"
             git push
           fi
