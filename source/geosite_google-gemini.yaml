@@ -1,0 +1,8 @@
+# Google Gemini 所需域名。
+# Clash / mihomo classical 规则集，可直接被 rule-provider 引用；
+# behavior: classical, format: yaml。改规则就改这个文件。
+payload:
+  - 'DOMAIN-SUFFIX,aisandbox-pa.googleapis.com'
+  - 'DOMAIN-SUFFIX,gemini.google.com'
+  - 'DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com'
+  - 'DOMAIN-SUFFIX,robinfrontend-pa.googleapis.com'

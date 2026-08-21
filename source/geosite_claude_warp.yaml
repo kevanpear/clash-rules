@@ -1,0 +1,10 @@
+# 未被解锁 DNS 覆盖、用于 WARP 兜底的 Claude 域名。
+# Clash / mihomo classical 规则集，可直接被 rule-provider 引用；
+# behavior: classical, format: yaml。改规则就改这个文件。
+payload:
+  - 'DOMAIN,servd-anthropic-website.b-cdn.net'
+  - 'DOMAIN-SUFFIX,clau.de'
+  - 'DOMAIN-SUFFIX,claude.com'
+  - 'DOMAIN-SUFFIX,claudemcpclient.com'
+  - 'DOMAIN-SUFFIX,claudemcpcontent.com'
+  - 'DOMAIN-SUFFIX,claudeusercontent.com'

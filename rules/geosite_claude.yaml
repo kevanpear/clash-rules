@@ -1,0 +1,12 @@
+# 由 scripts/build_clash.py 从 source/geosite_claude.yaml 编译，请勿手改。
+# 要改规则请改 source/geosite_claude.yaml，push 后 CI 会自动重编译。
+# behavior: domain, format: yaml
+payload:
+  - '+.anthropic.com'
+  - '+.clau.de'
+  - '+.claude.ai'
+  - '+.claude.com'
+  - '+.claudemcpclient.com'
+  - '+.claudemcpcontent.com'
+  - '+.claudeusercontent.com'
+  - 'servd-anthropic-website.b-cdn.net'

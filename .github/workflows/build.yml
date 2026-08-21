@@ -1,0 +1,54 @@
+name: Build rule-sets
+
+on:
+  push:
+    paths:
+      - "source/**"
+      - "scripts/**"
+      - ".github/workflows/build.yml"
+  pull_request:
+    paths:
+      - "source/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/setup-mihomo
+
+      # build_clash.py 自己就是语法检查器：写歪的规则行会带文件名和行号报错。
+      # --normalize 顺带把手写的 source 排序去重，入库形态始终一致。
+      - name: Build rules / mrs
+        run: python3 scripts/build_clash.py --mrs --normalize
+
+      - name: Check cross-list conflicts
+        run: python3 scripts/check_conflicts.py --strict
+
+      - name: Load every rule-set with mihomo
+        run: python3 scripts/validate.py
+
+      # PR 只做校验，不回写；只有 push / 手动触发才提交产物
+      - name: Commit compiled rule-sets
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add source/ rules/ mrs/
+          if git diff --staged --quiet; then
+            echo "no changes"
+          else
+            git commit -m "ci: rebuild clash rule-sets"
+            git push
+          fi

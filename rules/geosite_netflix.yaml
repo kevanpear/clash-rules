@@ -1,0 +1,30 @@
+# 由 scripts/build_clash.py 从 source/geosite_netflix.yaml 编译，请勿手改。
+# 要改规则请改 source/geosite_netflix.yaml，push 后 CI 会自动重编译。
+# behavior: domain, format: yaml
+# 注意：本规则集另有 4 条 DOMAIN-REGEX 无法用 domain 行为表达，已跳过；
+#       需要完整语义请直接引用 source/geosite_netflix.yaml（behavior: classical）。
+payload:
+  - '+.fast.com'
+  - '+.netflix.ca'
+  - '+.netflix.com'
+  - '+.netflix.net'
+  - '+.netflixdnstest0.com'
+  - '+.netflixdnstest1.com'
+  - '+.netflixdnstest10.com'
+  - '+.netflixdnstest2.com'
+  - '+.netflixdnstest3.com'
+  - '+.netflixdnstest4.com'
+  - '+.netflixdnstest5.com'
+  - '+.netflixdnstest6.com'
+  - '+.netflixdnstest7.com'
+  - '+.netflixdnstest8.com'
+  - '+.netflixdnstest9.com'
+  - '+.netflixinvestor.com'
+  - '+.netflixtechblog.com'
+  - '+.nflxext.com'
+  - '+.nflximg.com'
+  - '+.nflximg.net'
+  - '+.nflxsearch.net'
+  - '+.nflxso.net'
+  - '+.nflxvideo.net'
+  - 'netflix.com.edgesuite.net'

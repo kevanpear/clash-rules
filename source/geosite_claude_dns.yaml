@@ -1,0 +1,6 @@
+# 当前由解锁 DNS 覆盖的 Claude 域名。
+# Clash / mihomo classical 规则集，可直接被 rule-provider 引用；
+# behavior: classical, format: yaml。改规则就改这个文件。
+payload:
+  - 'DOMAIN-SUFFIX,anthropic.com'
+  - 'DOMAIN-SUFFIX,claude.ai'

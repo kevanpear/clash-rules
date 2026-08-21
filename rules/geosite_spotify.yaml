@@ -1,0 +1,25 @@
+# 由 scripts/build_clash.py 从 source/geosite_spotify.yaml 编译，请勿手改。
+# 要改规则请改 source/geosite_spotify.yaml，push 后 CI 会自动重编译。
+# behavior: domain, format: yaml
+payload:
+  - '+.byspotify.com'
+  - '+.pscdn.co'
+  - '+.scdn.co'
+  - '+.spoti.fi'
+  - '+.spotify-everywhere.com'
+  - '+.spotify.com'
+  - '+.spotify.design'
+  - '+.spotifycdn.com'
+  - '+.spotifycdn.net'
+  - '+.spotifycharts.com'
+  - '+.spotifycodes.com'
+  - '+.spotifyforbrands.com'
+  - '+.spotifyjobs.com'
+  - 'audio-ak-spotify-com.akamaized.net'
+  - 'audio4-ak-spotify-com.akamaized.net'
+  - 'cdn-spotify-experiments.conductrics.com'
+  - 'heads-ak-spotify-com.akamaized.net'
+  - 'heads4-ak-spotify-com.akamaized.net'
+  - 'spotify.com.edgesuite.net'
+  - 'spotify.map.fastly.net'
+  - 'spotify.map.fastlylb.net'

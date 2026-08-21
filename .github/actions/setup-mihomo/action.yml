@@ -1,0 +1,24 @@
+name: Setup mihomo
+description: 下载指定版本的 mihomo 并放进 PATH（用于编译 mrs 与真加载校验）
+
+inputs:
+  version:
+    description: mihomo release tag，例如 v1.19.30
+    required: false
+    default: v1.19.30
+
+runs:
+  using: composite
+  steps:
+    - name: Install mihomo ${{ inputs.version }}
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+      run: |
+        set -euo pipefail
+        url="https://github.com/MetaCubeX/mihomo/releases/download/${VERSION}/mihomo-linux-amd64-${VERSION}.gz"
+        curl -fsSL "$url" -o /tmp/mihomo.gz
+        gunzip -f /tmp/mihomo.gz
+        chmod +x /tmp/mihomo
+        sudo mv /tmp/mihomo /usr/local/bin/mihomo
+        mihomo -v

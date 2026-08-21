@@ -1,0 +1,6 @@
+# 本地临时拿的 mihomo 二进制
+mihomo
+mihomo.gz
+*.tmp
+__pycache__/
+*.pyc

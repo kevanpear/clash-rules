@@ -1,0 +1,13 @@
+# PlayStation / Sony 账号登录及风控域名。
+# Clash / mihomo classical 规则集，可直接被 rule-provider 引用；
+# behavior: classical, format: yaml。改规则就改这个文件。
+payload:
+  - 'DOMAIN,auth.api.sonyentertainmentnetwork.com'
+  - 'DOMAIN,ca.account.sony.com'
+  - 'DOMAIN,id.sonyentertainmentnetwork.com'
+  - 'DOMAIN,my.account.sony.com'
+  - 'DOMAIN,reference-data.api.playstation.com'
+  - 'DOMAIN,reporting.cdndex.io'
+  - 'DOMAIN,skw.eve.account.sony.com'
+  - 'DOMAIN,web.np.playstation.com'
+  - 'DOMAIN-SUFFIX,online-metrix.net'
