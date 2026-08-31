@@ -20,6 +20,19 @@ import ruleset  # noqa: E402
 SRC = Path(__file__).resolve().parent.parent / "source"
 DIRECT = "geosite_direct"
 
+# 非代理语义的规则集 —— 不参与 geosite_direct 的直连/代理冲突检查。
+#
+# 默认所有 geosite_* 都当代理类来查（新增代理规则集时自动纳入检查，
+# 忘了登记也不会漏检）；只有确实不是代理语义的才列在这里。
+# 与 sing-box-rules 侧 scripts/rulesets.py 的 NON_PROXY 保持对称，
+# 两边登记内容必须一致，否则两个仓库的校验口径会分叉。
+NON_PROXY = frozenset({
+    DIRECT,                # 直连大盘本身
+    "geosite_reject",      # 拦截：广告/追踪，命中即断，压过直连是期望行为
+    "geosite_win_update",  # 直连：Windows 更新，走代理纯属浪费流量
+    "geosite_win_spy",     # 拦截或直连：Windows 遥测，同样不是代理语义
+})
+
 
 def load_terms(path):
     """该规则集里的精确域名集合（DOMAIN + DOMAIN-SUFFIX）。
@@ -48,7 +61,7 @@ def main():
     total = 0
     for path in sorted(SRC.glob("geosite_*.yaml")):
         name = path.stem
-        if name == DIRECT:
+        if name in NON_PROXY:
             continue
         overlap = direct_terms & load_terms(path)
         if overlap:
@@ -56,6 +69,10 @@ def main():
             print("::warning::%s 与 %s 重叠 %d 个域名: %s%s"
                   % (DIRECT, name, len(overlap), ", ".join(sorted(overlap)[:20]),
                      " ..." if len(overlap) > 20 else ""))
+
+    skipped = sorted(n for n in NON_PROXY if n != DIRECT and (SRC / ("%s.yaml" % n)).exists())
+    if skipped:
+        print("[info] 已跳过 %d 个非代理语义规则集: %s" % (len(skipped), ", ".join(skipped)))
 
     if total == 0:
         print("[ok] 无跨表域名冲突")
