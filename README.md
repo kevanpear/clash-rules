@@ -4,6 +4,100 @@
 规则内容与 [`kevanpear/sing-box-rules`](https://github.com/kevanpear/sing-box-rules)
 一致，但这里从源码到产物都是 Clash 的写法。
 
+## 一键复制：完整规则配置
+
+**只想要一份能直接跑的整份配置？** 打开 **[`example/clash.yaml`](example/clash.yaml)**，
+点右上角复制按钮拿走整份模板——只需填入自己的节点、改掉面板密码即可（节点用
+`include-all` 自动纳入策略组，加几个都不必动配置）。已含性能/嗅探/持久化等推荐项，
+适配 mihomo ≥ 1.18.9。
+
+想自己拼、只取规则部分？用下面这两段：直接抄进你的 Clash / mihomo 配置即可（代码块右上角有复制按钮）。
+把第一段并入 `rule-providers:`、第二段并入 `rules:`——**如果你的配置已经有这两个顶层键，
+只复制其下的条目，别把 `rule-providers:` / `rules:` 这行也粘进去，否则会出现重复顶层键**。
+
+前提：`proxy: PROXY` 里的 `PROXY` 换成你自己已有的**代理组名**（下载规则集要经它出墙）；
+`rules` 里的 `PROXY` / `DIRECT` / `REJECT` 也换成你的策略组名。规则集按 `interval: 86400`
+每天自动更新，push 新规则后客户端自动拉到，无需手动操作。
+
+<details open>
+<summary><b>① rule-providers（18 个规则集）</b></summary>
+
+```yaml
+rule-providers:
+  # ===== 拦截：广告 / 追踪 / 遥测（命中即断）=====
+  reject: { type: http, behavior: domain, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/rules/geosite_reject.yaml", path: ./ruleset/geosite_reject.yaml }
+  win_spy: { type: http, behavior: domain, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/rules/geosite_win_spy.yaml", path: ./ruleset/geosite_win_spy.yaml }  # Windows 遥测；想保功能可改 DIRECT
+  # ===== 走代理：AI / 流媒体 / 音乐（精确服务，压过直连大盘）=====
+  openai: { type: http, behavior: classical, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/source/geosite_openai.yaml", path: ./ruleset/geosite_openai.yaml }  # 含 keyword/regex，用 source
+  claude: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_claude.mrs", path: ./ruleset/geosite_claude.mrs }
+  google: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_google.mrs", path: ./ruleset/geosite_google.mrs }
+  gemini: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_google-gemini.mrs", path: ./ruleset/geosite_google-gemini.mrs }
+  youtube: { type: http, behavior: classical, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/source/geosite_youtube.yaml", path: ./ruleset/geosite_youtube.yaml }  # 含 keyword，用 source
+  spotify: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_spotify.mrs", path: ./ruleset/geosite_spotify.mrs }
+  tiktok: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_tiktok.mrs", path: ./ruleset/geosite_tiktok.mrs }
+  netflix: { type: http, behavior: classical, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/source/geosite_netflix.yaml", path: ./ruleset/geosite_netflix.yaml }  # 含 regex，用 source
+  disney: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_disney.mrs", path: ./ruleset/geosite_disney.mrs }
+  primevideo: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_primevideo.mrs", path: ./ruleset/geosite_primevideo.mrs }
+  hbo: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_hbo.mrs", path: ./ruleset/geosite_hbo.mrs }
+  playstation: { type: http, behavior: domain, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geosite_playstation.mrs", path: ./ruleset/geosite_playstation.mrs }
+  # ===== 直连：国内白名单 / Windows 更新 =====
+  win_update: { type: http, behavior: domain, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/rules/geosite_win_update.yaml", path: ./ruleset/geosite_win_update.yaml }
+  cn_direct: { type: http, behavior: classical, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/source/geosite_direct.yaml", path: ./ruleset/geosite_direct.yaml }  # 9.5 万条，用 source 保 regex；求快可换 mrs/geosite_direct.mrs + behavior: domain, format: mrs
+  # ===== 走代理：GFWList 大盘（放直连之后，不压任何直连列表）=====
+  gfw_proxy: { type: http, behavior: classical, format: yaml, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/source/geosite_proxy.yaml", path: ./ruleset/geosite_proxy.yaml }  # 含 regex，用 source
+  # ===== 直连：中国大陆 IP 段（唯一 IP 规则，必须排在所有域名规则之后）=====
+  cn_ip: { type: http, behavior: ipcidr, format: mrs, interval: 86400, proxy: PROXY, url: "https://raw.githubusercontent.com/kevanpear/clash-rules/master/mrs/geoip_cn.mrs", path: ./ruleset/geoip_cn.mrs }
+```
+
+</details>
+
+<details open>
+<summary><b>② rules（顺序即优先级，别打乱）</b></summary>
+
+```yaml
+rules:
+  # ----- 拦截：广告 / 追踪 / 遥测（命中即断）-----
+  - RULE-SET,reject,REJECT
+  - RULE-SET,win_spy,REJECT        # Windows 遥测；想保功能可改 DIRECT
+  # ----- 走代理：AI / 流媒体 / 音乐（精确服务，压过直连大盘）-----
+  - RULE-SET,openai,PROXY
+  - RULE-SET,claude,PROXY
+  - RULE-SET,google,PROXY
+  - RULE-SET,gemini,PROXY
+  - RULE-SET,youtube,PROXY
+  - RULE-SET,spotify,PROXY
+  - RULE-SET,tiktok,PROXY
+  - RULE-SET,netflix,PROXY
+  - RULE-SET,disney,PROXY
+  - RULE-SET,primevideo,PROXY
+  - RULE-SET,hbo,PROXY
+  - RULE-SET,playstation,PROXY
+  # ----- 直连：国内白名单 / Windows 更新 -----
+  - RULE-SET,win_update,DIRECT
+  - RULE-SET,cn_direct,DIRECT
+  # ----- 走代理：GFWList 大盘（放直连之后，不压任何直连列表）-----
+  - RULE-SET,gfw_proxy,PROXY
+  # ----- 直连：中国大陆 IP 段（必须排在所有域名规则之后）-----
+  - RULE-SET,cn_ip,DIRECT          # 可写成 RULE-SET,cn_ip,DIRECT,no-resolve 免额外 DNS 解析
+  - MATCH,PROXY
+```
+
+</details>
+
+顺序有讲究，别随手调换：**拦截**最先 → **精确代理服务**（压过直连大盘，这样 `itunes.apple.com`
+这类被有意归到 openai 的域名才走代理）→ **直连大盘** → **GFWList 代理大盘**（放在直连之后，
+避免它把该直连的 `windowsupdate.com` 之类误拉去代理）→ **IP 规则**（`geoip_cn` 只能匹配以
+IP 直连的流量，必须垫在所有域名规则之后）→ 兜底 `MATCH`。想只保留部分服务，删掉不需要的
+`rule-providers` 条目和对应的 `RULE-SET` 行即可（成对删）。
+
+上面这段已覆盖全部对外服务集。仓库里还有 `geosite_claude_dns` / `geosite_claude_warp` 两个
+Claude 子集，是给「解锁 DNS + WARP 兜底」这种进阶分流单独调度用的（域名已含在 `claude` 里），
+一般不需要，故未列入；需要时按同样写法把 `mrs/geosite_claude_dns.mrs`、
+`mrs/geosite_claude_warp.mrs` 挂上即可。
+
+下面「[客户端引用方式](#客户端引用方式)」一节讲的是**三种格式怎么选、为什么这么挂**，
+想了解取舍再看；只想跑起来，上面两段就够了。
+
 ## 结构
 
 | 目录 | 内容 | 说明 |
