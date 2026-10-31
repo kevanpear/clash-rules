@@ -3,6 +3,7 @@
 # behavior: domain, format: yaml
 payload:
   - '+.clau.de'
+  - '+.claude.app'
   - '+.claudemcpclient.com'
   - '+.claudemcpcontent.com'
   - '+.claudeusercontent.com'
