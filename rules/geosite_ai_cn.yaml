@@ -1,0 +1,17 @@
+# 由 scripts/build_clash.py 从 source/geosite_ai_cn.yaml 编译，请勿手改。
+# 要改规则请改 source/geosite_ai_cn.yaml，push 后 CI 会自动重编译。
+# behavior: domain, format: yaml
+payload:
+  - '+.deepseek.com'
+  - '+.kimi.ai'
+  - '+.kimi.com'
+  - '+.mimo.mi.com'
+  - '+.mimo.xiaomi.com'
+  - '+.moonshot.ai'
+  - '+.moonshot.cn'
+  - '+.xiaomimimo.com'
+  - 'account.xiaomi.com'
+  - 'ark.cn-beijing.volces.com'
+  - 'cdn.cnbj1.fds.api.mi-img.com'
+  - 'id.mi.com'
+  - 'privacy.mi.com'
