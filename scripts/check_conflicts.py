@@ -29,9 +29,8 @@ DIRECT = "geosite_direct"
 NON_PROXY = frozenset({
     DIRECT,                # 直连大盘本身
     "geosite_reject",      # 拦截：广告/追踪，命中即断，压过直连是期望行为
-    "geosite_win_update",  # 直连：Windows 更新，走代理纯属浪费流量
     "geosite_win_spy",     # 拦截或直连：Windows 遥测，同样不是代理语义
-})
+}) | ruleset.DIRECT_LIKE
 
 
 def load_terms(path):

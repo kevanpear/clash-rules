@@ -25,6 +25,9 @@ RULE_TYPES = (
 DOMAIN_TYPES = ("DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD", "DOMAIN-REGEX")
 IP_TYPES = ("IP-CIDR", "IP-CIDR6")
 
+# 与 sing-box-rules 的 DIRECT_LIKE 对称；GFWList 大盘应让路。
+DIRECT_LIKE = frozenset({"geosite_ai_cn", "geosite_win_update"})
+
 # behavior: domain 能表达的类型；keyword / regex 表达不了
 DOMAIN_BEHAVIOR_TYPES = ("DOMAIN", "DOMAIN-SUFFIX")
 

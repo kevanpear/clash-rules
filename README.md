@@ -182,6 +182,7 @@ PR 只跑校验、不回写产物。
 ## 规则集清单
 
 - `geosite_direct` — 直连域名（约 9.5 万条）
+- `geosite_ai_cn` — 中国AI服务直连独立分组，域名统一在sing-box规则项目维护
 - `geosite_proxy` — 走代理域名（GFWList 转换，约 2.4 万条）
 - `geosite_openai` — OpenAI 及相关 CDN
 - `geosite_google` — 完整 Google 域名集（排除 `@cn`）
@@ -196,3 +197,14 @@ PR 只跑校验、不回写产物。
 
 命名沿用 `geosite_` / `geoip_` 前缀：`check_conflicts.py` 只扫 `geosite_*.yaml`
 做域名重叠检查，IP 规则集换前缀即天然跳过。
+
+## 中国AI分组的维护
+
+`source/geosite_ai_cn.yaml`是sing-box-rules的`source/geosite_ai_cn.json`的镜像，包含DeepSeek、火山方舟、Kimi／Moonshot、小米MiMo及已核实登录／资源主机。更新时在姊妹sing-box项目编辑该JSON，并运行：
+
+```sh
+python3.11 scripts/check_ai_cn.py --write-clash ../clash-rules/source/geosite_ai_cn.yaml
+python3.11 scripts/check_ai_cn.py --check-clash ../clash-rules/source/geosite_ai_cn.yaml
+```
+
+这些命令在sing-box-rules目录执行。当前13条规则均为DOMAIN／DOMAIN-SUFFIX，可完整编译为domain YAML和MRS。此组登记为直连语义，与direct大盘重叠正常；GFWList生成时会让路。出站和DNS仍由客户端配置，在规则模式下将本组DIRECT放在全局兜底前；不包含任意工具网页或国外AI服务。产物继续只由CI提交。

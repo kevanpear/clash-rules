@@ -1,0 +1,17 @@
+# 中国 AI 服务直连分组；出站与 DNS 策略由客户端配置决定。
+# 从 sing-box-rules/source/geosite_ai_cn.json 生成，请在该文件维护域名。
+# 生成：python3.11 scripts/check_ai_cn.py --write-clash <本文件路径>
+payload:
+  - 'DOMAIN,account.xiaomi.com'
+  - 'DOMAIN,ark.cn-beijing.volces.com'
+  - 'DOMAIN,cdn.cnbj1.fds.api.mi-img.com'
+  - 'DOMAIN,id.mi.com'
+  - 'DOMAIN,privacy.mi.com'
+  - 'DOMAIN-SUFFIX,deepseek.com'
+  - 'DOMAIN-SUFFIX,kimi.ai'
+  - 'DOMAIN-SUFFIX,kimi.com'
+  - 'DOMAIN-SUFFIX,mimo.mi.com'
+  - 'DOMAIN-SUFFIX,mimo.xiaomi.com'
+  - 'DOMAIN-SUFFIX,moonshot.ai'
+  - 'DOMAIN-SUFFIX,moonshot.cn'
+  - 'DOMAIN-SUFFIX,xiaomimimo.com'

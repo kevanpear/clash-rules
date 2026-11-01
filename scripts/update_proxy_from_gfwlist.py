@@ -194,11 +194,13 @@ def main():
     raw = fetch(dict.fromkeys((args.source, args.fallback)))
     rules, metadata = parse_rules(decode_autoproxy(raw))
     direct_terms = load_exact_terms(args.direct)
+    for name in sorted(ruleset.DIRECT_LIKE):
+        direct_terms |= load_exact_terms(Path(__file__).resolve().parent.parent / "source" / (name + ".yaml"))
     before_filter = sum(len(rules[kind]) for kind in EXACT_KINDS)
     for kind in EXACT_KINDS:
         rules[kind] -= direct_terms
     filtered = before_filter - sum(len(rules[kind]) for kind in EXACT_KINDS)
-    print("[filter] removed {} exact terms already present in direct".format(filtered))
+    print("[filter] removed {} exact terms already present in direct-semantics rule-sets".format(filtered))
     for line in metadata:
         if line.startswith("! Last Modified:"):
             print("[source]{}".format(line[1:]))
