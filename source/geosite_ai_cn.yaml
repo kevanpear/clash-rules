@@ -8,6 +8,7 @@ payload:
   - 'DOMAIN,id.mi.com'
   - 'DOMAIN,privacy.mi.com'
   - 'DOMAIN-SUFFIX,deepseek.com'
+  - 'DOMAIN-SUFFIX,deepseeksvc.com'
   - 'DOMAIN-SUFFIX,kimi.ai'
   - 'DOMAIN-SUFFIX,kimi.com'
   - 'DOMAIN-SUFFIX,mimo.mi.com'
