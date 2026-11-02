@@ -3,6 +3,7 @@
 # behavior: domain, format: yaml
 payload:
   - '+.deepseek.com'
+  - '+.deepseeksvc.com'
   - '+.kimi.ai'
   - '+.kimi.com'
   - '+.mimo.mi.com'
