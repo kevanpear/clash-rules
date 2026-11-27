@@ -80,6 +80,7 @@ payload:
   - 'DOMAIN,api.dashlytrack.app'
   - 'DOMAIN,api.mindbox.cloud'
   - 'DOMAIN,api.mindbox.ru'
+  - 'DOMAIN,aurora-customization-usw2.lithium.com'
   - 'DOMAIN,b2.mail.ru'
   - 'DOMAIN,bbs.boingboing.net'
   - 'DOMAIN,beck-online.beck.de'
